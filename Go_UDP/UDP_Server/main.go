@@ -36,8 +36,6 @@ func response(udpserver net.PacketConn, addr net.Addr, buf []byte) {
 	fmt.Printf("Received message from (%v): %v!. at %v", addr, string(buf), receivedTime)
 	responsestr1 := fmt.Sprintf("your message: %v.", string(buf))
 	responsestr2 := fmt.Sprintf("Received by the server at:%v", receivedTime)
-	/*fmt.Println("\n", responsestr1) //debug statement
-	fmt.Println(responsestr2)*/
 	udpserver.WriteTo([]byte(responsestr1), addr) //Sends the response string back to the client.
 	udpserver.WriteTo([]byte(responsestr2), addr)
 }
