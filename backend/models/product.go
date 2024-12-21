@@ -7,40 +7,33 @@ import (
 type Product struct {
 	ID       int
 	Name     string
-	Price    float32
+	Price    float64
 	Quantity int
 }
 
-func (p *Product) Get(Products []Product) { //to Get Product details
-	//It Accepts Products slice to check if the product to be added is already in the inventory's product list
+func (p *Product) CheckExistingProduct(Products []Product, ID int) (bool, *Product) {
 
-	fmt.Print("Enter Product ID:")
-	if _, err := fmt.Scan(&p.ID); err != nil {
-		fmt.Println("Invalid input, Please Enter valid ID")
+	existingProduct := FindProductById(Products, ID)
+
+	if existingProduct != nil {
+		return true, existingProduct
+	} else {
+		return false, existingProduct
 	}
+}
 
-	existingProduct := FindProductById(Products, p.ID) // to find if same Product is already exixting in inventory or not
+func (p *Product) Get() []Product { //to Get Product details
 
-	if existingProduct != nil { // if same Product is already existing in inventory then add in existing Product details
+	fmt.Println("Enter Product ID:")
+	fmt.Scan(&p.ID)
+	fmt.Println("Enter Product Name:")
+	fmt.Scan(&p.Name)
+	fmt.Println("Enter Product Price:")
+	fmt.Scan(&p.Price)
+	fmt.Println("Enter Product Quantity:")
+	fmt.Scan(&p.Quantity)
 
-		fmt.Print("Enter additional Quantity:")
-		var QdditionalQuantity int
-		fmt.Scan(&QdditionalQuantity)
-
-		existingProduct.Quantity += QdditionalQuantity
-		p.ID = existingProduct.ID
-		p.Name = existingProduct.Name
-		p.Price = existingProduct.Price
-		p.Quantity = existingProduct.Quantity
-	} else { // adding new Product to inventory
-
-		fmt.Println("Enter Product Name:")
-		fmt.Scan(&p.Name)
-		fmt.Println("Enter Product Price:")
-		fmt.Scan(&p.Price)
-		fmt.Println("Enter Product Quantity:")
-		fmt.Scan(&p.Quantity)
-	}
+	return []Product{{ID: p.ID, Name: p.Name, Price: p.Price, Quantity: p.Quantity}}
 }
 
 func (p *Product) Put() {
