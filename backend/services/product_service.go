@@ -17,13 +17,13 @@ func (ps *ProductService) AddExistingProductQuantity(existingProduct *models.Pro
 	ps.Product.Price = existingProduct.Price
 }
 
-func (ps *ProductService) AddProduct(products []models.Product, newProduct *models.Product) []models.Product {
+func (ps *ProductService) AddProduct(products *[]models.Product, newProduct *models.Product) []models.Product {
 
-	products = append(products, *newProduct)
-	return products
+	*products = append(*products, *newProduct)
+	return *products
 }
 
-func (ps *ProductService) handleAddProduct(Products []models.Product) {
+func (ps *ProductService) handleAddProduct(Products *[]models.Product) {
 
 	p := &models.Product{}
 
@@ -32,7 +32,7 @@ func (ps *ProductService) handleAddProduct(Products []models.Product) {
 		fmt.Println("Invalid input, Please Enter valid Product ID")
 	}
 
-	exists, existingProduct := p.CheckExistingProduct(Products, p.ID)
+	exists, existingProduct := p.CheckExistingProduct(*Products, p.ID)
 
 	if exists {
 
